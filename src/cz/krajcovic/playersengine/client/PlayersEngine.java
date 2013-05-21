@@ -30,7 +30,8 @@ public class PlayersEngine implements EntryPoint {
 			+ "connection and try again.";
 
 	/**
-	 * Create a remote service proxy to talk to the server-side Greeting service.
+	 * Create a remote service proxy to talk to the server-side Greeting
+	 * service.
 	 */
 	private final GreetingServiceAsync greetingService = GWT
 			.create(GreetingService.class);
@@ -66,12 +67,14 @@ public class PlayersEngine implements EntryPoint {
 		closeButton.getElement().setId("closeButton");
 		final Label textToServerLabel = new Label();
 		final HTML serverResponseLabel = new HTML();
+		final HTML serverResponseLabel2 = new HTML();
 		VerticalPanel dialogVPanel = new VerticalPanel();
 		dialogVPanel.addStyleName("dialogVPanel");
 		dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
 		dialogVPanel.add(textToServerLabel);
 		dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
 		dialogVPanel.add(serverResponseLabel);
+		dialogVPanel.add(serverResponseLabel2);
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
 		dialogVPanel.add(closeButton);
 		dialogBox.setWidget(dialogVPanel);
@@ -104,7 +107,8 @@ public class PlayersEngine implements EntryPoint {
 			}
 
 			/**
-			 * Send the name from the nameField to the server and wait for a response.
+			 * Send the name from the nameField to the server and wait for a
+			 * response.
 			 */
 			private void sendNameToServer() {
 				// First, we validate the input.
@@ -119,6 +123,7 @@ public class PlayersEngine implements EntryPoint {
 				sendButton.setEnabled(false);
 				textToServerLabel.setText(textToServer);
 				serverResponseLabel.setText("");
+				serverResponseLabel2.setText("");
 				greetingService.greetServer(textToServer,
 						new AsyncCallback<String>() {
 							public void onFailure(Throwable caught) {
@@ -141,6 +146,27 @@ public class PlayersEngine implements EntryPoint {
 								closeButton.setFocus(true);
 							}
 						});
+
+				greetingService.showGoogleUser(new AsyncCallback<String>() {
+					public void onFailure(Throwable caught) {
+						// Show the RPC error message to the user
+						dialogBox.setText("Remote Procedure Call - Failure");
+						serverResponseLabel2
+								.addStyleName("serverResponseLabelError");
+						serverResponseLabel2.setHTML(SERVER_ERROR);
+						dialogBox.center();
+						closeButton.setFocus(true);
+					}
+
+					public void onSuccess(String result) {
+						dialogBox.setText("Remote Procedure Call ");
+						serverResponseLabel2
+								.removeStyleName("serverResponseLabelError");
+						serverResponseLabel2.setHTML(result);
+						dialogBox.center();
+						closeButton.setFocus(true);
+					}
+				});
 			}
 		}
 
