@@ -1,6 +1,7 @@
 package cz.krajcovic.playersengine.client;
 
 import cz.krajcovic.playersengine.shared.FieldVerifier;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -40,18 +41,21 @@ public class PlayersEngine implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		final Button sendButton = new Button("Send");
+		final Button sendButton = new Button("Login");
+		// final Button signButton = new Button("Sign");
 		final TextBox nameField = new TextBox();
 		nameField.setText("GWT User");
 		final Label errorLabel = new Label();
 
 		// We can add style names to widgets
 		sendButton.addStyleName("sendButton");
+		// signButton.addStyleName("signButton");
 
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
 		RootPanel.get("nameFieldContainer").add(nameField);
 		RootPanel.get("sendButtonContainer").add(sendButton);
+		// RootPanel.get("signButtonContainer").add(signButton);
 		RootPanel.get("errorLabelContainer").add(errorLabel);
 
 		// Focus the cursor on the name field when the app loads
@@ -87,6 +91,23 @@ public class PlayersEngine implements EntryPoint {
 				sendButton.setFocus(true);
 			}
 		});
+
+		// class LoginHandler implements ClickHandler {
+		//
+		// @Override
+		// public void onClick(ClickEvent event) {
+		// UserService userService = UserServiceFactory.getUserService();
+		// User user = userService.getCurrentUser();
+		//
+		// if (user != null) {
+		// Window.open(userService.createLoginURL("/"), null, null);
+		// } else {
+		// Window.open(userService.createLoginURL("/"), null, null);
+		// }
+		//
+		// }
+		//
+		// }
 
 		// Create a handler for the sendButton and nameField
 		class MyHandler implements ClickHandler, KeyUpHandler {
@@ -174,5 +195,8 @@ public class PlayersEngine implements EntryPoint {
 		MyHandler handler = new MyHandler();
 		sendButton.addClickHandler(handler);
 		nameField.addKeyUpHandler(handler);
+
+		// LoginHandler loginHandler = new LoginHandler();
+		// signButton.addClickHandler(loginHandler);
 	}
 }

@@ -59,10 +59,10 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 
 		if (user != null) {
 			return "Hello, " + user.getNickname() + "<br><a href="
-					+ userService.createLoginURL("/PlayersEngine.html?gwt.codesvr=127.0.0.1:9997")
+					+ userService.createLogoutURL("/PlayersEngine.html")
 					+ ">Sign out</a>.";
 		} else {
-			return "<a href=" + userService.createLoginURL("/PlayersEngine.html?gwt.codesvr=127.0.0.1:9997")
+			return "<a href=" + userService.createLoginURL("/PlayersEngine.html")
 					+ ">Sign in or register</a>.";
 		}
 	}
