@@ -1,4 +1,4 @@
-package cz.krajcovic.playersengine.client;
+package cz.krajcovic.playersengine.base;
 
 public class Player {
 	private String secondName;

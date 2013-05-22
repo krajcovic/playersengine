@@ -26,6 +26,10 @@ h1 {
   width: 400px;
 }
 
+.editVPanel {
+  margin: 5px;
+}
+
 .dialogVPanel {
   margin: 5px;
 }

@@ -6,19 +6,18 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
+
+import cz.krajcovic.playersengine.base.Player;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -31,6 +30,8 @@ public class PlayersEngine implements EntryPoint {
 	private static final String SERVER_ERROR = "An error occurred while "
 			+ "attempting to contact the server. Please check your network "
 			+ "connection and try again.";
+
+	private static final int REFRESH_INTERVAL = 5000; // ms
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting
@@ -46,8 +47,16 @@ public class PlayersEngine implements EntryPoint {
 	private TextBox newSecondName = new TextBox();
 	private TextBox newFirstName = new TextBox();
 	private TextBox newDescription = new TextBox();
-
 	private Button addNewPlayerButton = new Button("Add");
+
+	final DialogBox editDialogBox = new DialogBox();
+	private VerticalPanel editPanel = new VerticalPanel();
+	private TextBox editSecondName = new TextBox();
+	private TextBox editFirstName = new TextBox();
+	private TextBox editDescription = new TextBox();
+	private Button editSaveButton = new Button("Save");
+	private Button editCloseButton = new Button("Close");
+
 	private Label lastUpdatedLabel = new Label();
 
 	private ArrayList<Player> playersList = new ArrayList<Player>();
@@ -74,6 +83,36 @@ public class PlayersEngine implements EntryPoint {
 		addPanel.add(newDescription);
 		addPanel.add(addNewPlayerButton);
 
+		editDialogBox.setText("Edit player");
+		editDialogBox.setAnimationEnabled(true);
+//		editCloseButton.getElement().setId("closeButton");
+		editPanel.addStyleName("editPanel");
+		
+		editPanel.add(editSecondName);
+		editPanel.add(editFirstName);
+		editPanel.add(editDescription);
+		editPanel.add(editSaveButton);
+		editPanel.add(editCloseButton);
+		editDialogBox.setWidget(editPanel);
+
+		editSaveButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				editDialogBox.hide();
+			}
+		});
+		
+		editCloseButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				editDialogBox.hide();
+
+			}
+		});
+
 		// TODO Assemble Main panel.
 		mainPanel.add(playersTable);
 		mainPanel.add(addPanel);
@@ -94,6 +133,23 @@ public class PlayersEngine implements EntryPoint {
 
 			}
 		});
+
+		// Setup timer to refresh list automatically
+		Timer refreshTimer = new Timer() {
+
+			@Override
+			public void run() {
+				refreshPlayerList();
+
+			}
+
+		};
+		refreshTimer.scheduleRepeating(REFRESH_INTERVAL);
+	}
+
+	protected void refreshPlayerList() {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -121,6 +177,17 @@ public class PlayersEngine implements EntryPoint {
 
 		// TODO Add a button to edit and remove this player from the table.
 		Button changePlayerButton = new Button("e");
+		changePlayerButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				editSecondName.setText(newPlayer.getSecondName());
+				editFirstName.setText(newPlayer.getFirstName());
+				editDescription.setText(newPlayer.getDescription());
+				editDialogBox.show();
+
+			}
+		});
 		playersTable.setWidget(lastRow, 3, changePlayerButton);
 
 		Button removePlayerButton = new Button("x");
@@ -139,6 +206,8 @@ public class PlayersEngine implements EntryPoint {
 		// TODO Get the stock price.
 
 	}
+	
+	
 
 	// public class TextBoxHandler extends Composite implements KeyPressHandler
 	// {
