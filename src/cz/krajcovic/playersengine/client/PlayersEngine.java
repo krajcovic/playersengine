@@ -23,14 +23,6 @@ import cz.krajcovic.playersengine.base.Player;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class PlayersEngine implements EntryPoint {
-	/**
-	 * The message displayed to the user when the server cannot be reached or
-	 * returns an error.
-	 */
-	private static final String SERVER_ERROR = "An error occurred while "
-			+ "attempting to contact the server. Please check your network "
-			+ "connection and try again.";
-
 	private static final int REFRESH_INTERVAL = 5000; // ms
 
 	/**
@@ -49,17 +41,12 @@ public class PlayersEngine implements EntryPoint {
 	private TextBox newDescription = new TextBox();
 	private Button addNewPlayerButton = new Button("Add");
 
-	// final DialogBox editDialogBox = new DialogBox();
-	// private VerticalPanel editPanel = new VerticalPanel();
-	// private TextBox editSecondName = new TextBox();
-	// private TextBox editFirstName = new TextBox();
-	// private TextBox editDescription = new TextBox();
-	// private Button editSaveButton = new Button("Save");
-	// private Button editCloseButton = new Button("Close");
-
 	private Label lastUpdatedLabel = new Label();
 
 	private ArrayList<Player> playersList = new ArrayList<Player>();
+	
+	private PlayersEngineConstants constants = GWT.create(PlayersEngineConstants.class);
+	private PlayersEngineMessages messages = GWT.create(PlayersEngineMessages.class);
 
 	/**
 	 * This is the entry point method.
@@ -67,11 +54,11 @@ public class PlayersEngine implements EntryPoint {
 	public void onModuleLoad() {
 
 		// Create table for players.
-		playersTable.setText(0, 0, "Second name");
-		playersTable.setText(0, 1, "First name");
-		playersTable.setText(0, 2, "Description");
-		playersTable.setText(0, 3, "Edit");
-		playersTable.setText(0, 4, "Remove");
+		playersTable.setText(0, 0, constants.secondName());
+		playersTable.setText(0, 1, constants.firstName());
+		playersTable.setText(0, 2, constants.description());
+		playersTable.setText(0, 3, constants.edit());
+		playersTable.setText(0, 4, constants.remove());
 
 		// Add style to elements it the stock list table.
 		playersTable.setCellPadding(6);
@@ -159,7 +146,8 @@ public class PlayersEngine implements EntryPoint {
 		player.setDescription(newDescription.getText().trim());
 
 		if (!player.validate()) {
-			Window.alert("'" + player.toString() + "' are not a valid symbols.");
+			//Window.alert("'" + player.toString() + "' are not a valid symbols.");
+			Window.alert(messages.invalidSymbol(player.toString()));
 			return;
 		}
 
