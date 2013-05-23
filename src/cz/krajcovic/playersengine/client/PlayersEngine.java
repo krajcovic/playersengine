@@ -49,13 +49,13 @@ public class PlayersEngine implements EntryPoint {
 	private TextBox newDescription = new TextBox();
 	private Button addNewPlayerButton = new Button("Add");
 
-	final DialogBox editDialogBox = new DialogBox();
-	private VerticalPanel editPanel = new VerticalPanel();
-	private TextBox editSecondName = new TextBox();
-	private TextBox editFirstName = new TextBox();
-	private TextBox editDescription = new TextBox();
-	private Button editSaveButton = new Button("Save");
-	private Button editCloseButton = new Button("Close");
+	// final DialogBox editDialogBox = new DialogBox();
+	// private VerticalPanel editPanel = new VerticalPanel();
+	// private TextBox editSecondName = new TextBox();
+	// private TextBox editFirstName = new TextBox();
+	// private TextBox editDescription = new TextBox();
+	// private Button editSaveButton = new Button("Save");
+	// private Button editCloseButton = new Button("Close");
 
 	private Label lastUpdatedLabel = new Label();
 
@@ -83,35 +83,35 @@ public class PlayersEngine implements EntryPoint {
 		addPanel.add(newDescription);
 		addPanel.add(addNewPlayerButton);
 
-		editDialogBox.setText("Edit player");
-		editDialogBox.setAnimationEnabled(true);
-//		editCloseButton.getElement().setId("closeButton");
-		editPanel.addStyleName("editPanel");
-		
-		editPanel.add(editSecondName);
-		editPanel.add(editFirstName);
-		editPanel.add(editDescription);
-		editPanel.add(editSaveButton);
-		editPanel.add(editCloseButton);
-		editDialogBox.setWidget(editPanel);
-
-		editSaveButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-				editDialogBox.hide();
-			}
-		});
-		
-		editCloseButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				editDialogBox.hide();
-
-			}
-		});
+		// editDialogBox.setText("Edit player");
+		// editDialogBox.setAnimationEnabled(true);
+		// // editCloseButton.getElement().setId("closeButton");
+		// editPanel.addStyleName("editPanel");
+		//
+		// editPanel.add(editSecondName);
+		// editPanel.add(editFirstName);
+		// editPanel.add(editDescription);
+		// editPanel.add(editSaveButton);
+		// editPanel.add(editCloseButton);
+		// editDialogBox.setWidget(editPanel);
+		//
+		// editSaveButton.addClickHandler(new ClickHandler() {
+		//
+		// @Override
+		// public void onClick(ClickEvent event) {
+		// // TODO Auto-generated method stub
+		// editDialogBox.hide();
+		// }
+		// });
+		//
+		// editCloseButton.addClickHandler(new ClickHandler() {
+		//
+		// @Override
+		// public void onClick(ClickEvent event) {
+		// editDialogBox.hide();
+		//
+		// }
+		// });
 
 		// TODO Assemble Main panel.
 		mainPanel.add(playersTable);
@@ -148,7 +148,21 @@ public class PlayersEngine implements EntryPoint {
 	}
 
 	protected void refreshPlayerList() {
-		// TODO Auto-generated method stub
+		for (Player player : playersList) {
+			updateTable(player);
+		}
+
+	}
+
+	private void updateTable(Player player) {
+		if (!playersList.contains(player)) {
+			return;
+		}
+
+		int row = playersList.indexOf(player) + 1;
+		playersTable.setText(row, 0, player.getSecondName());
+		playersTable.setText(row, 1, player.getFirstName());
+		playersTable.setText(row, 2, player.getDescription());
 
 	}
 
@@ -157,23 +171,22 @@ public class PlayersEngine implements EntryPoint {
 	 * addNewPlayerButton or press enter in the newTextBox.
 	 */
 	protected void addPlayer() {
-		final Player newPlayer = new Player();
-		newPlayer.setSecondName(newSecondName.getText().trim());
-		newPlayer.setFirstName(newFirstName.getText().trim());
-		newPlayer.setDescription(newDescription.getText().trim());
+		final Player player = new Player();
+		player.setSecondName(newSecondName.getText().trim());
+		player.setFirstName(newFirstName.getText().trim());
+		player.setDescription(newDescription.getText().trim());
 
-		if (!newPlayer.validate()) {
-			Window.alert("'" + newPlayer.toString()
-					+ "' are not a valid symbols.");
+		if (!player.validate()) {
+			Window.alert("'" + player.toString() + "' are not a valid symbols.");
 			return;
 		}
 
 		// TODO Add the stock to the table.
-		playersList.add(newPlayer);
+		playersList.add(player);
 		int lastRow = playersTable.getRowCount();
-		playersTable.setText(lastRow, 0, newPlayer.getSecondName());
-		playersTable.setText(lastRow, 1, newPlayer.getFirstName());
-		playersTable.setText(lastRow, 2, newPlayer.getDescription());
+		playersTable.setText(lastRow, 0, player.getSecondName());
+		playersTable.setText(lastRow, 1, player.getFirstName());
+		playersTable.setText(lastRow, 2, player.getDescription());
 
 		// TODO Add a button to edit and remove this player from the table.
 		Button changePlayerButton = new Button("e");
@@ -181,9 +194,58 @@ public class PlayersEngine implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				editSecondName.setText(newPlayer.getSecondName());
-				editFirstName.setText(newPlayer.getFirstName());
-				editDescription.setText(newPlayer.getDescription());
+
+				final DialogBox editDialogBox = new DialogBox();
+				VerticalPanel editPanel = new VerticalPanel();
+				final TextBox editSecondName = new TextBox();
+				final TextBox editFirstName = new TextBox();
+				final TextBox editDescription = new TextBox();
+				Button editSaveButton = new Button("Save");
+				Button editCloseButton = new Button("Close");
+
+				editDialogBox.setText("Edit player");
+				editDialogBox.setAnimationEnabled(true);
+				// editCloseButton.getElement().setId("closeButton");
+				editPanel.addStyleName("editPanel");
+
+				editPanel.add(editSecondName);
+				editPanel.add(editFirstName);
+				editPanel.add(editDescription);
+				editPanel.add(editSaveButton);
+				editPanel.add(editCloseButton);
+				editDialogBox.setWidget(editPanel);
+
+				editSaveButton.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						player.setSecondName(editSecondName.getText());
+						player.setFirstName(editFirstName.getText());
+						player.setDescription(editDescription.getText());
+
+						if (!player.validate()) {
+							Window.alert("'" + player.toString()
+									+ "' are not a valid symbols.");
+							return;
+						}
+
+						editDialogBox.hide();
+						updateTable(player);
+					}
+				});
+
+				editCloseButton.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						editDialogBox.hide();
+
+					}
+				});
+
+				editSecondName.setText(player.getSecondName());
+				editFirstName.setText(player.getFirstName());
+				editDescription.setText(player.getDescription());
 				editDialogBox.show();
 
 			}
@@ -195,7 +257,7 @@ public class PlayersEngine implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				int removedIndex = playersList.indexOf(newPlayer);
+				int removedIndex = playersList.indexOf(player);
 				playersList.remove(removedIndex);
 				playersTable.removeRow(removedIndex + 1);
 
@@ -206,8 +268,6 @@ public class PlayersEngine implements EntryPoint {
 		// TODO Get the stock price.
 
 	}
-	
-	
 
 	// public class TextBoxHandler extends Composite implements KeyPressHandler
 	// {
