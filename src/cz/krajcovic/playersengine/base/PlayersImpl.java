@@ -2,13 +2,14 @@ package cz.krajcovic.playersengine.base;
 
 import java.util.ArrayList;
 
+@Deprecated
 public class PlayersImpl implements Players {
 	
 	private ArrayList<Player> playersList = new ArrayList<Player>();
 
 	@Override
 	public void add(Player newPlayer) {
-		// TODO Auto-generated method stub
+		playersList.add(newPlayer);
 		
 	}
 

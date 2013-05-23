@@ -37,8 +37,8 @@ public class PlayersEngine implements EntryPoint {
 	 * Create a remote service proxy to talk to the server-side Greeting
 	 * service.
 	 */
-	private final GreetingServiceAsync greetingService = GWT
-			.create(GreetingService.class);
+	// private final GreetingServiceAsync greetingService = GWT
+	// .create(GreetingService.class);
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private FlexTable playersTable = new FlexTable();
@@ -66,62 +66,44 @@ public class PlayersEngine implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 
-		// TODO Create table for players.
+		// Create table for players.
 		playersTable.setText(0, 0, "Second name");
 		playersTable.setText(0, 1, "First name");
 		playersTable.setText(0, 2, "Description");
 		playersTable.setText(0, 3, "Edit");
 		playersTable.setText(0, 4, "Remove");
 
-		// TODO Assemble Add new player.
-		// TextBoxHandler handle = new TextBoxHandler();
-		// newSecondName.addKeyPressHandler(handle);
-		// newFirstName.addKeyPressHandler(handle);
-		// newDescription.addKeyPressHandler(handle);
+		// Add style to elements it the stock list table.
+		playersTable.setCellPadding(6);
+		playersTable.getRowFormatter().addStyleName(0, "playersListHeader");
+		playersTable.addStyleName("playersList");
+		playersTable.getCellFormatter().addStyleName(0, 0,
+				"playersListStringColumn");
+		playersTable.getCellFormatter().addStyleName(0, 1,
+				"playersListStringColumn");
+		playersTable.getCellFormatter().addStyleName(0, 2,
+				"playersListStringColumn");
+		playersTable.getCellFormatter().addStyleName(0, 3,
+				"playersListButtonColumn");
+		playersTable.getCellFormatter().addStyleName(0, 4,
+				"playersListButtonColumn");
+
+		// Assemble Add new player.
 		addPanel.add(newSecondName);
 		addPanel.add(newFirstName);
 		addPanel.add(newDescription);
 		addPanel.add(addNewPlayerButton);
+		addPanel.addStyleName("addPanel");
 
-		// editDialogBox.setText("Edit player");
-		// editDialogBox.setAnimationEnabled(true);
-		// // editCloseButton.getElement().setId("closeButton");
-		// editPanel.addStyleName("editPanel");
-		//
-		// editPanel.add(editSecondName);
-		// editPanel.add(editFirstName);
-		// editPanel.add(editDescription);
-		// editPanel.add(editSaveButton);
-		// editPanel.add(editCloseButton);
-		// editDialogBox.setWidget(editPanel);
-		//
-		// editSaveButton.addClickHandler(new ClickHandler() {
-		//
-		// @Override
-		// public void onClick(ClickEvent event) {
-		// // TODO Auto-generated method stub
-		// editDialogBox.hide();
-		// }
-		// });
-		//
-		// editCloseButton.addClickHandler(new ClickHandler() {
-		//
-		// @Override
-		// public void onClick(ClickEvent event) {
-		// editDialogBox.hide();
-		//
-		// }
-		// });
-
-		// TODO Assemble Main panel.
+		// Assemble Main panel.
 		mainPanel.add(playersTable);
 		mainPanel.add(addPanel);
 		mainPanel.add(lastUpdatedLabel);
 
-		// TODO Associate the Main panel with the HTML host page.
+		// Associate the Main panel with the HTML host page.
 		RootPanel.get("playersList").add(mainPanel);
 
-		// TODO Move cursor focus to the input box.
+		// Move cursor focus to the input box.
 		newSecondName.setFocus(true);
 
 		// Listen for mouse events on the add button
@@ -184,12 +166,24 @@ public class PlayersEngine implements EntryPoint {
 		// TODO Add the stock to the table.
 		playersList.add(player);
 		int lastRow = playersTable.getRowCount();
+
 		playersTable.setText(lastRow, 0, player.getSecondName());
 		playersTable.setText(lastRow, 1, player.getFirstName());
 		playersTable.setText(lastRow, 2, player.getDescription());
+		playersTable.getCellFormatter().addStyleName(lastRow, 0,
+				"playersListStringColumn");
+		playersTable.getCellFormatter().addStyleName(lastRow, 1,
+				"playersListStringColumn");
+		playersTable.getCellFormatter().addStyleName(lastRow, 2,
+				"playersListStringColumn");
+		playersTable.getCellFormatter().addStyleName(lastRow, 3,
+				"playersListButtonColumn");
+		playersTable.getCellFormatter().addStyleName(lastRow, 4,
+				"playersListButtonColumn");
 
-		// TODO Add a button to edit and remove this player from the table.
+		// Add a button to edit and remove this player from the table.
 		Button changePlayerButton = new Button("e");
+		changePlayerButton.addStyleDependentName("edit");
 		changePlayerButton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -204,6 +198,7 @@ public class PlayersEngine implements EntryPoint {
 				Button editCloseButton = new Button("Close");
 
 				editDialogBox.setText("Edit player");
+				// editDialogBox.setGlassEnabled(true);
 				editDialogBox.setAnimationEnabled(true);
 				// editCloseButton.getElement().setId("closeButton");
 				editPanel.addStyleName("editPanel");
@@ -246,6 +241,9 @@ public class PlayersEngine implements EntryPoint {
 				editSecondName.setText(player.getSecondName());
 				editFirstName.setText(player.getFirstName());
 				editDescription.setText(player.getDescription());
+
+				editDialogBox.center();
+
 				editDialogBox.show();
 
 			}
@@ -253,6 +251,7 @@ public class PlayersEngine implements EntryPoint {
 		playersTable.setWidget(lastRow, 3, changePlayerButton);
 
 		Button removePlayerButton = new Button("x");
+		removePlayerButton.addStyleDependentName("remove");
 		removePlayerButton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -265,30 +264,9 @@ public class PlayersEngine implements EntryPoint {
 		});
 		playersTable.setWidget(lastRow, 4, removePlayerButton);
 
-		// TODO Get the stock price.
+		newSecondName.setText("");
+		newFirstName.setText("");
+		newDescription.setText("");
 
 	}
-
-	// public class TextBoxHandler extends Composite implements KeyPressHandler
-	// {
-	//
-	// @Override
-	// public void onKeyPress(KeyPressEvent event) {
-	//
-	// Widget sender = (Widget) event.getSource();
-	//
-	// if (sender == newSecondName) {
-	//
-	// } else if (sender == newFirstName) {
-	//
-	// } else if (sender == newDescription) {
-	// char code = event.getCharCode();
-	// if (event.getCharCode() == KeyCodes.KEY_ENTER) {
-	// addPlayer();
-	// }
-	// }
-	//
-	// }
-	//
-	// }
 }
