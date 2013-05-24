@@ -1,6 +1,7 @@
 package cz.krajcovic.playersengine.client;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -8,6 +9,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -18,6 +20,8 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import cz.krajcovic.playersengine.base.Player;
+import cz.krajcovic.playersengine.client.langs.PlayersEngineConstants;
+import cz.krajcovic.playersengine.client.langs.PlayersEngineMessages;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -26,11 +30,10 @@ public class PlayersEngine implements EntryPoint {
 	private static final int REFRESH_INTERVAL = 5000; // ms
 
 	/**
-	 * Create a remote service proxy to talk to the server-side Greeting
-	 * service.
+	 * Create a remote service proxy to talk to the server-side Players service.
 	 */
-	// private final GreetingServiceAsync greetingService = GWT
-	// .create(GreetingService.class);
+	private final PlayersServiceAsync playersService = GWT
+			.create(PlayersService.class);
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private FlexTable playersTable = new FlexTable();
@@ -43,41 +46,40 @@ public class PlayersEngine implements EntryPoint {
 	private Label lastUpdatedLabel = new Label();
 	private Button addNewPlayerButton = new Button();
 
-	private ArrayList<Player> playersList = new ArrayList<Player>();
+	// private ArrayList<Player> playersList = new ArrayList<Player>();
 
 	private PlayersEngineConstants constants = GWT
 			.create(PlayersEngineConstants.class);
 	private PlayersEngineMessages messages = GWT
 			.create(PlayersEngineMessages.class);
 
-	
+	private AsyncCallback<List<Player>> getAllCallback = new AsyncCallback<List<Player>>() {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(List<Player> result) {
+			playersTable.removeAllRows();
+
+			createPlayersTableHeader();
+
+			for (Player player : result) {
+				updatePlayers(player);
+			}
+
+		}
+	};
 
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
 
-		// Create table for players.
-		playersTable.setText(0, 0, constants.secondName());
-		playersTable.setText(0, 1, constants.firstName());
-		playersTable.setText(0, 2, constants.description());
-		playersTable.setText(0, 3, constants.edit());
-		playersTable.setText(0, 4, constants.remove());
-
-		// Add style to elements it the stock list table.
-		playersTable.setCellPadding(6);
-		playersTable.getRowFormatter().addStyleName(0, "playersListHeader");
-		playersTable.addStyleName("playersList");
-		playersTable.getCellFormatter().addStyleName(0, 0,
-				"playersListStringColumn");
-		playersTable.getCellFormatter().addStyleName(0, 1,
-				"playersListStringColumn");
-		playersTable.getCellFormatter().addStyleName(0, 2,
-				"playersListStringColumn");
-		playersTable.getCellFormatter().addStyleName(0, 3,
-				"playersListButtonColumn");
-		playersTable.getCellFormatter().addStyleName(0, 4,
-				"playersListButtonColumn");
+		createPlayersTableHeader();
 
 		// Assemble Add new player.
 		addPanel.add(newSecondName);
@@ -113,31 +115,60 @@ public class PlayersEngine implements EntryPoint {
 
 			@Override
 			public void run() {
-				refreshPlayerList();
+				// refreshPlayerList();
 
 			}
 
 		};
 		refreshTimer.scheduleRepeating(REFRESH_INTERVAL);
+
+		// refreshPlayerList();
+	}
+
+	private void createPlayersTableHeader() {
+		// Create table for players.
+		playersTable.setText(0, 0, constants.id());
+		playersTable.setText(0, 1, constants.secondName());
+		playersTable.setText(0, 2, constants.firstName());
+		playersTable.setText(0, 3, constants.description());
+		playersTable.setText(0, 4, constants.edit());
+		playersTable.setText(0, 5, constants.remove());
+
+		// Add style to elements it the stock list table.
+		playersTable.setCellPadding(6);
+		playersTable.getRowFormatter().addStyleName(0, "playersListHeader");
+
+		playersTable.addStyleName("playersList");
+		playersTable.getCellFormatter().addStyleName(0, 0,
+				"playersListNumericColumn");
+		playersTable.getCellFormatter().addStyleName(0, 1,
+				"playersListStringColumn");
+		playersTable.getCellFormatter().addStyleName(0, 2,
+				"playersListStringColumn");
+		playersTable.getCellFormatter().addStyleName(0, 3,
+				"playersListStringColumn");
+		playersTable.getCellFormatter().addStyleName(0, 4,
+				"playersListButtonColumn");
+		playersTable.getCellFormatter().addStyleName(0, 5,
+				"playersListButtonColumn");
 	}
 
 	protected void refreshPlayerList() {
-		for (Player player : playersList) {
-			updateTable(player);
-		}
-
+		// for (Player player : playersService.getAll(getAllCallback ) ) {
+		// updateTable(player);
+		// }
+		playersService.getAll(getAllCallback);
 	}
 
-	private void updateTable(Player player) {
-		if (!playersList.contains(player)) {
-			return;
-		}
+	private void updatePlayers(Player player) {
+		// int row = playersList.indexOf(player) + 1;
+		// int row = playersTable.getRowCount();
+		// playersTable.setText(row, 0, String.valueOf(player.getId()));
+		// playersTable.setText(row, 1, player.getSecondName());
+		// playersTable.setText(row, 2, player.getFirstName());
+		// playersTable.setText(row, 3, player.getDescription());
 
-		int row = playersList.indexOf(player) + 1;
-		playersTable.setText(row, 0, player.getSecondName());
-		playersTable.setText(row, 1, player.getFirstName());
-		playersTable.setText(row, 2, player.getDescription());
-
+		add2Table(player);
 	}
 
 	/**
@@ -146,6 +177,7 @@ public class PlayersEngine implements EntryPoint {
 	 */
 	protected void addPlayer() {
 		final Player player = new Player();
+		player.setId(playersTable.getRowCount()); // TODO: predelat!!!!
 		player.setSecondName(newSecondName.getText().trim());
 		player.setFirstName(newFirstName.getText().trim());
 		player.setDescription(newDescription.getText().trim());
@@ -158,21 +190,45 @@ public class PlayersEngine implements EntryPoint {
 		}
 
 		// TODO Add the stock to the table.
-		playersList.add(player);
+		// playersList.add(player);
+		playersService.add(player, new AsyncCallback<Void>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(messages.addNewPlayerFailed());
+
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				newSecondName.setText("");
+				newFirstName.setText("");
+				newDescription.setText("");
+				add2Table(player);
+				Window.alert(messages.addNewPlayerSuccess());
+
+			}
+		});
+	}
+
+	private void add2Table(final Player player) {
 		int lastRow = playersTable.getRowCount();
 
-		playersTable.setText(lastRow, 0, player.getSecondName());
-		playersTable.setText(lastRow, 1, player.getFirstName());
-		playersTable.setText(lastRow, 2, player.getDescription());
+		playersTable.setText(lastRow, 0, String.valueOf(player.getId()));
+		playersTable.setText(lastRow, 1, player.getSecondName());
+		playersTable.setText(lastRow, 2, player.getFirstName());
+		playersTable.setText(lastRow, 3, player.getDescription());
 		playersTable.getCellFormatter().addStyleName(lastRow, 0,
-				"playersListStringColumn");
+				"playersListNumericColumn");
 		playersTable.getCellFormatter().addStyleName(lastRow, 1,
 				"playersListStringColumn");
 		playersTable.getCellFormatter().addStyleName(lastRow, 2,
 				"playersListStringColumn");
 		playersTable.getCellFormatter().addStyleName(lastRow, 3,
-				"playersListButtonColumn");
+				"playersListStringColumn");
 		playersTable.getCellFormatter().addStyleName(lastRow, 4,
+				"playersListButtonColumn");
+		playersTable.getCellFormatter().addStyleName(lastRow, 5,
 				"playersListButtonColumn");
 
 		// Add a button to edit and remove this player from the table.
@@ -188,8 +244,8 @@ public class PlayersEngine implements EntryPoint {
 				final TextBox editSecondName = new TextBox();
 				final TextBox editFirstName = new TextBox();
 				final TextBox editDescription = new TextBox();
-				Button editSaveButton = new Button("Save");
-				Button editCloseButton = new Button("Close");
+				Button editSaveButton = new Button(constants.save());
+				Button editCloseButton = new Button(constants.close());
 
 				editDialogBox.setText("Edit player");
 				// editDialogBox.setGlassEnabled(true);
@@ -213,16 +269,31 @@ public class PlayersEngine implements EntryPoint {
 						player.setDescription(editDescription.getText());
 
 						if (!player.validate()) {
-							Window.alert("'" + player.toString()
-									+ "' are not a valid symbols.");
-							return;
-						}
+							Window.alert(messages.invalidSymbol(player
+									.toString()));
 
-						editDialogBox.hide();
-						updateTable(player);
+						} else {
+
+							playersService.update(player.getId(), player,
+									new AsyncCallback<Void>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											Window.alert(messages.playerUpdateFailed());
+
+										}
+
+										@Override
+										public void onSuccess(Void result) {
+											editDialogBox.hide();
+											// updateTable(player);
+											refreshPlayerList();
+
+										}
+									});
+						}
 					}
 				});
-
 				editCloseButton.addClickHandler(new ClickHandler() {
 
 					@Override
@@ -237,12 +308,11 @@ public class PlayersEngine implements EntryPoint {
 				editDescription.setText(player.getDescription());
 
 				editDialogBox.center();
-
 				editDialogBox.show();
 
 			}
 		});
-		playersTable.setWidget(lastRow, 3, changePlayerButton);
+		playersTable.setWidget(lastRow, 4, changePlayerButton);
 
 		Button removePlayerButton = new Button("x");
 		removePlayerButton.addStyleDependentName("remove");
@@ -250,17 +320,35 @@ public class PlayersEngine implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				int removedIndex = playersList.indexOf(player);
-				playersList.remove(removedIndex);
-				playersTable.removeRow(removedIndex + 1);
+				// int removedIndex = playersList.indexOf(player);
+				// playersList.remove(removedIndex);
+				playersService.remove(player.getId(), new AsyncCallback<Boolean>() {
+
+					@Override
+					public void onSuccess(Boolean result) {
+						// TODO Auto-generated method stub
+						if(result)
+						{
+							refreshPlayerList();
+						}
+						else
+						{
+							Window.alert(messages.playerRemoveFailed());
+						}
+
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						Window.alert(messages.playerRemoveFailed());
+
+					}
+				});
+				// playersTable.removeRow(player.getId());
 
 			}
 		});
-		playersTable.setWidget(lastRow, 4, removePlayerButton);
-
-		newSecondName.setText("");
-		newFirstName.setText("");
-		newDescription.setText("");
-
+		playersTable.setWidget(lastRow, 5, removePlayerButton);
 	}
 }

@@ -10,14 +10,19 @@
 		<servlet-class>cz.krajcovic.playersengine.server.GreetingServiceImpl</servlet-class>
 	</servlet>
 
-	<servlet-mapping>
-		<servlet-name>greetServlet</servlet-name>
-		<url-pattern>/playersengine</url-pattern>
-	</servlet-mapping>
+	<servlet>
+		<servlet-name>playersServlet</servlet-name>
+		<servlet-class>cz.krajcovic.playersengine.server.PlayersServiceImpl</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>greetServlet</servlet-name>
 		<url-pattern>/starterapplication/greet</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>playersServlet</servlet-name>
+		<url-pattern>/playersengine/players</url-pattern>
 	</servlet-mapping>
 
 	<!-- Default page to serve -->

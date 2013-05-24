@@ -1,4 +1,4 @@
-package cz.krajcovic.playersengine.client;
+package cz.krajcovic.playersengine.client.langs;
 
 import com.google.gwt.i18n.client.Constants;
 
@@ -30,5 +30,8 @@ public interface PlayersEngineConstants extends Constants {
 
 	@DefaultStringValue("Close")
 	String close();
+
+	@DefaultStringValue("ID")
+	String id();
 
 }
