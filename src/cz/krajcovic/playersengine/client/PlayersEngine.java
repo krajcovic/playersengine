@@ -1,6 +1,5 @@
 package cz.krajcovic.playersengine.client;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.EntryPoint;

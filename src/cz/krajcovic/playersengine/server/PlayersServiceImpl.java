@@ -14,8 +14,7 @@ public class PlayersServiceImpl extends RemoteServiceServlet implements
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5767380066228906245L;
-
+	private static final long serialVersionUID = -2280840469774779249L;
 	ArrayList<Player> playersList = new ArrayList<Player>();
 
 	@Override
