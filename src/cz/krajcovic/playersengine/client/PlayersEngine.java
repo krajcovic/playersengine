@@ -39,14 +39,18 @@ public class PlayersEngine implements EntryPoint {
 	private TextBox newSecondName = new TextBox();
 	private TextBox newFirstName = new TextBox();
 	private TextBox newDescription = new TextBox();
-	private Button addNewPlayerButton = new Button("Add");
 
 	private Label lastUpdatedLabel = new Label();
+	private Button addNewPlayerButton = new Button();
 
 	private ArrayList<Player> playersList = new ArrayList<Player>();
+
+	private PlayersEngineConstants constants = GWT
+			.create(PlayersEngineConstants.class);
+	private PlayersEngineMessages messages = GWT
+			.create(PlayersEngineMessages.class);
+
 	
-	private PlayersEngineConstants constants = GWT.create(PlayersEngineConstants.class);
-	private PlayersEngineMessages messages = GWT.create(PlayersEngineMessages.class);
 
 	/**
 	 * This is the entry point method.
@@ -79,6 +83,7 @@ public class PlayersEngine implements EntryPoint {
 		addPanel.add(newSecondName);
 		addPanel.add(newFirstName);
 		addPanel.add(newDescription);
+		addNewPlayerButton.setText(constants.add());
 		addPanel.add(addNewPlayerButton);
 		addPanel.addStyleName("addPanel");
 
@@ -146,7 +151,8 @@ public class PlayersEngine implements EntryPoint {
 		player.setDescription(newDescription.getText().trim());
 
 		if (!player.validate()) {
-			//Window.alert("'" + player.toString() + "' are not a valid symbols.");
+			// Window.alert("'" + player.toString() +
+			// "' are not a valid symbols.");
 			Window.alert(messages.invalidSymbol(player.toString()));
 			return;
 		}
