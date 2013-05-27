@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import cz.krajcovic.playersengine.base.Player;
+import cz.krajcovic.playersengine.client.DelistedException;
 import cz.krajcovic.playersengine.client.PlayersService;
 
 public class PlayersServiceImpl extends RemoteServiceServlet implements
@@ -18,16 +19,23 @@ public class PlayersServiceImpl extends RemoteServiceServlet implements
 	ArrayList<Player> playersList = new ArrayList<Player>();
 
 	@Override
-	public void add(Player player) {
+	public void add(Player player) throws DelistedException {
+		if (!player.validate()) {
+			throw new DelistedException(player.toString());
+		}
 		playersList.add(player);
 
 	}
 
 	@Override
-	public void update(int playerId, Player player) {
+	public void update(int playerId, Player player) throws DelistedException {
 
 		Player old = getById(playerId);
 		if (old != null) {
+
+			if (!player.validate()) {
+				throw new DelistedException("Invalid player name");
+			}
 			old.update(player);
 		}
 	}
