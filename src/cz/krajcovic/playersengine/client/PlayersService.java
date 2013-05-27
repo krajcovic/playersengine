@@ -10,9 +10,9 @@ import cz.krajcovic.playersengine.base.Player;
 @RemoteServiceRelativePath("players")
 public interface PlayersService extends RemoteService {
 
-	void add(Player player);
+	void add(Player player) throws DelistedException;
 
-	void update(int playerId, Player player);
+	void update(int playerId, Player player) throws DelistedException;
 	
 	boolean remove(int playerId);
 	

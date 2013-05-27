@@ -33,6 +33,7 @@ public class PlayersEngine implements EntryPoint {
 	 */
 	private final PlayersServiceAsync playersService = GWT
 			.create(PlayersService.class);
+	private Label errorMsgLabel = new Label();
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private FlexTable playersTable = new FlexTable();
@@ -88,7 +89,12 @@ public class PlayersEngine implements EntryPoint {
 		addPanel.add(addNewPlayerButton);
 		addPanel.addStyleName("addPanel");
 
-		// Assemble Main panel.
+		// Assembly error label
+		errorMsgLabel.setStyleName("errorMessage");
+		errorMsgLabel.setVisible(false);
+		mainPanel.add(errorMsgLabel);
+		
+		// Assemble Main panel.		
 		mainPanel.add(playersTable);
 		mainPanel.add(addPanel);
 		mainPanel.add(lastUpdatedLabel);
@@ -181,12 +187,12 @@ public class PlayersEngine implements EntryPoint {
 		player.setFirstName(newFirstName.getText().trim());
 		player.setDescription(newDescription.getText().trim());
 
-		if (!player.validate()) {
-			// Window.alert("'" + player.toString() +
-			// "' are not a valid symbols.");
-			Window.alert(messages.invalidSymbol(player.toString()));
-			return;
-		}
+		// if (!player.validate()) {
+		// // Window.alert("'" + player.toString() +
+		// // "' are not a valid symbols.");
+		// Window.alert(messages.invalidSymbol(player.toString()));
+		// return;
+		// }
 
 		// TODO Add the stock to the table.
 		// playersList.add(player);
@@ -194,7 +200,18 @@ public class PlayersEngine implements EntryPoint {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert(messages.addNewPlayerFailed());
+				// Window.alert(messages.addNewPlayerFailed());
+				// If the stock code is in the list of delisted codes, display
+				// an error message.
+				String details = caught.getMessage();
+				if (caught instanceof DelistedException) {
+					details = messages
+							.invalidSymbol(((DelistedException) caught)
+									.getSymbol());
+				}
+
+				errorMsgLabel.setText("Error: " + details);
+				errorMsgLabel.setVisible(true);
 
 			}
 
@@ -204,7 +221,9 @@ public class PlayersEngine implements EntryPoint {
 				newFirstName.setText("");
 				newDescription.setText("");
 				add2Table(player);
-				Window.alert(messages.addNewPlayerSuccess());
+				// Window.alert(messages.addNewPlayerSuccess());
+				// Clear any errors.
+				errorMsgLabel.setVisible(false);
 
 			}
 		});
@@ -278,7 +297,8 @@ public class PlayersEngine implements EntryPoint {
 
 										@Override
 										public void onFailure(Throwable caught) {
-											Window.alert(messages.playerUpdateFailed());
+											Window.alert(messages
+													.playerUpdateFailed());
 
 										}
 
@@ -321,29 +341,27 @@ public class PlayersEngine implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				// int removedIndex = playersList.indexOf(player);
 				// playersList.remove(removedIndex);
-				playersService.remove(player.getId(), new AsyncCallback<Boolean>() {
+				playersService.remove(player.getId(),
+						new AsyncCallback<Boolean>() {
 
-					@Override
-					public void onSuccess(Boolean result) {
-						// TODO Auto-generated method stub
-						if(result)
-						{
-							refreshPlayerList();
-						}
-						else
-						{
-							Window.alert(messages.playerRemoveFailed());
-						}
+							@Override
+							public void onSuccess(Boolean result) {
+								// TODO Auto-generated method stub
+								if (result) {
+									refreshPlayerList();
+								} else {
+									Window.alert(messages.playerRemoveFailed());
+								}
 
-					}
+							}
 
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						Window.alert(messages.playerRemoveFailed());
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+								Window.alert(messages.playerRemoveFailed());
 
-					}
-				});
+							}
+						});
 				// playersTable.removeRow(player.getId());
 
 			}
