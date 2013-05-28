@@ -4,6 +4,16 @@
               http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
 
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>playersengine/PlayersEngine.html</welcome-file>
+	</welcome-file-list>
+	<!-- <welcome-file-list> <welcome-file>questbook.jsp</welcome-file> </welcome-file-list> -->
+
+	<session-config>
+		<session-timeout>300</session-timeout>
+	</session-config>
+
 	<!-- Servlets -->
 	<servlet>
 		<servlet-name>greetServlet</servlet-name>
@@ -13,6 +23,11 @@
 	<servlet>
 		<servlet-name>playersServlet</servlet-name>
 		<servlet-class>cz.krajcovic.playersengine.server.PlayersServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>jsonPlayerDetail</servlet-name>
+		<servlet-class>cz.krajcovic.playersengine.server.JsonPlayerDetail</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -25,10 +40,9 @@
 		<url-pattern>/playersengine/players</url-pattern>
 	</servlet-mapping>
 
-	<!-- Default page to serve -->
-	<welcome-file-list>
-		<welcome-file>PlayersEngine.html</welcome-file>
-	</welcome-file-list>
-	<!-- <welcome-file-list> <welcome-file>questbook.jsp</welcome-file> </welcome-file-list> -->
+	<servlet-mapping>
+		<servlet-name>jsonPlayerDetail</servlet-name>
+		<url-pattern>/playersengine/playerdetail</url-pattern>
+	</servlet-mapping>
 
 </web-app>

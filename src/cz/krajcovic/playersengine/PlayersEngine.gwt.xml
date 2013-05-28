@@ -16,13 +16,14 @@
 	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
 
 	<!-- Other module inherits -->
+	<inherits name="com.google.gwt.http.HTTP" />
 
 	<!-- Specify the app entry point class. -->
 	<entry-point class='cz.krajcovic.playersengine.client.PlayersEngine' />
-	
+
 	<!-- Identify Czech as a supported language -->
-	<extend-property values="cz" name="locale"/>
-	
+	<extend-property values="cz" name="locale" />
+
 	<!-- Specify the paths for translatable code -->
 	<source path='client' />
 	<source path='base' />

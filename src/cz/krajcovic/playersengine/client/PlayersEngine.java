@@ -4,8 +4,14 @@ import java.util.List;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -19,6 +25,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import cz.krajcovic.playersengine.base.Player;
+import cz.krajcovic.playersengine.base.PlayerDetail;
 import cz.krajcovic.playersengine.client.langs.PlayersEngineConstants;
 import cz.krajcovic.playersengine.client.langs.PlayersEngineMessages;
 
@@ -27,6 +34,9 @@ import cz.krajcovic.playersengine.client.langs.PlayersEngineMessages;
  */
 public class PlayersEngine implements EntryPoint {
 	private static final int REFRESH_INTERVAL = 5000; // ms
+
+	private static final String JSON_URL = GWT.getModuleBaseURL()
+			+ "playerdetail?id=";
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Players service.
@@ -93,8 +103,8 @@ public class PlayersEngine implements EntryPoint {
 		errorMsgLabel.setStyleName("errorMessage");
 		errorMsgLabel.setVisible(false);
 		mainPanel.add(errorMsgLabel);
-		
-		// Assemble Main panel.		
+
+		// Assemble Main panel.
 		mainPanel.add(playersTable);
 		mainPanel.add(addPanel);
 		mainPanel.add(lastUpdatedLabel);
@@ -229,23 +239,39 @@ public class PlayersEngine implements EntryPoint {
 		});
 	}
 
+	/**
+	 * If can't get JSON, display error message.
+	 * 
+	 * @param error
+	 */
+	private void displayError(String string) {
+
+		errorMsgLabel.setText("Error: " + string);
+		errorMsgLabel.setVisible(true);
+	}
+
 	private void add2Table(final Player player) {
 		int lastRow = playersTable.getRowCount();
 
 		playersTable.setText(lastRow, 0, String.valueOf(player.getId()));
-		playersTable.setText(lastRow, 1, player.getSecondName());
-		playersTable.setText(lastRow, 2, player.getFirstName());
-		playersTable.setText(lastRow, 3, player.getDescription());
 		playersTable.getCellFormatter().addStyleName(lastRow, 0,
 				"playersListNumericColumn");
+
+		playersTable.setText(lastRow, 1, player.getSecondName());
 		playersTable.getCellFormatter().addStyleName(lastRow, 1,
 				"playersListStringColumn");
+
+		playersTable.setText(lastRow, 2, player.getFirstName());
 		playersTable.getCellFormatter().addStyleName(lastRow, 2,
 				"playersListStringColumn");
+
+		playersTable.setText(lastRow, 3, player.getDescription());
 		playersTable.getCellFormatter().addStyleName(lastRow, 3,
 				"playersListStringColumn");
+
 		playersTable.getCellFormatter().addStyleName(lastRow, 4,
 				"playersListButtonColumn");
+
 		playersTable.getCellFormatter().addStyleName(lastRow, 5,
 				"playersListButtonColumn");
 
@@ -256,6 +282,42 @@ public class PlayersEngine implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
+
+				final DialogBox detailBox = new DialogBox();
+
+				// TODO Send request to server and handle errors.
+				RequestBuilder builder = new RequestBuilder(RequestBuilder.GET,
+						JSON_URL + "123");
+				try {
+					Request request = builder.sendRequest(null,
+							new RequestCallback() {
+
+								@Override
+								public void onResponseReceived(Request request,
+										Response response) {
+									if (response.getStatusCode() == 200) {
+										detailBox.setText(response.getText());
+										detailBox.show();
+									} else {
+										detailBox.setText("Couldn't retrive JSON "
+												+ response.getStatusText());
+										detailBox.show();
+									}
+
+								}
+
+								@Override
+								public void onError(Request request,
+										Throwable exception) {
+									displayError("Couldn't retrieve JSON");
+
+								}
+							});
+				} catch (RequestException e) {
+					displayError("Couldn't retrieve JSON");
+				}
+
+				// detailBox.show();
 
 				final DialogBox editDialogBox = new DialogBox();
 				VerticalPanel editPanel = new VerticalPanel();
@@ -305,6 +367,7 @@ public class PlayersEngine implements EntryPoint {
 										@Override
 										public void onSuccess(Void result) {
 											editDialogBox.hide();
+											detailBox.hide();
 											// updateTable(player);
 											refreshPlayerList();
 
@@ -318,6 +381,7 @@ public class PlayersEngine implements EntryPoint {
 					@Override
 					public void onClick(ClickEvent event) {
 						editDialogBox.hide();
+						detailBox.hide();
 
 					}
 				});
@@ -330,6 +394,7 @@ public class PlayersEngine implements EntryPoint {
 				editDialogBox.show();
 
 			}
+
 		});
 		playersTable.setWidget(lastRow, 4, changePlayerButton);
 
@@ -368,4 +433,8 @@ public class PlayersEngine implements EntryPoint {
 		});
 		playersTable.setWidget(lastRow, 5, removePlayerButton);
 	}
+
+	private final native JsArray<PlayerDetail> asArrayOfPlayerDetail(String json) /*-{
+		return eval(json);
+	}-*/;
 }
