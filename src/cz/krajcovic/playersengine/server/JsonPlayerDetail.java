@@ -2,14 +2,13 @@ package cz.krajcovic.playersengine.server;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.joda.time.DateTime;
 
 import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
@@ -32,7 +31,7 @@ public class JsonPlayerDetail extends HttpServlet {
 			JSONObject data = new JSONObject();
 			try {
 				data.put("playerId", Integer.valueOf(playerId));
-				data.put("created", DateTime.now());
+				data.put("created", new Date());
 				data.put("weight", (new Random()).nextInt(100) + 50);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

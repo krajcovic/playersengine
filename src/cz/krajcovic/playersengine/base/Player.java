@@ -13,6 +13,18 @@ public class Player implements Serializable {
 	private String firstName;
 	private String description;
 
+	public Player() {
+
+	}
+
+	public Player(int id, String secondName, String firstName,
+			String description) {
+		this.id = id;
+		this.secondName = secondName;
+		this.firstName = firstName;
+		this.description = description;
+	}
+
 	public void update(Player newPlayer) {
 
 		this.setId(newPlayer.getId());

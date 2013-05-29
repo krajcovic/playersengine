@@ -1,7 +1,10 @@
 package cz.krajcovic.playersengine.base;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 
 public class PlayerDetail extends JavaScriptObject {
 
@@ -21,14 +24,18 @@ public class PlayerDetail extends JavaScriptObject {
 		return this.weight;
 	}-*/;
 
-	public final native DateTimeFormat getCreated() /*-{
+	public final native Date getCreated() /*-{
 		return this.created;
 	}-*/;
 
 	// Non-JSNI method to return
 	public final String getWeightInfo() {
-		return this.getPlayerId().toString() + " have " + this.getWeight()
-				+ " kg at " + getCreated().parse("dd.MM.yy");
+		return this.getPlayerId().toString()
+				+ " have "
+				+ this.getWeight()
+				+ " kg at "
+				+ DateTimeFormat.getFormat(PredefinedFormat.DATE_LONG).format(
+						this.getCreated());
 	}
 
 }

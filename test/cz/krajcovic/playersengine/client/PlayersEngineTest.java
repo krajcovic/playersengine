@@ -19,5 +19,5 @@ public class PlayersEngineTest extends GWTTestCase {
 	public void testSimple() {
 		assertTrue(true);
 	}
-
+	
 }
