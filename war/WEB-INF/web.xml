@@ -26,10 +26,17 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>jsonPlayer</servlet-name>
+		<servlet-class>cz.krajcovic.playersengine.server.JsonPlayer</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>jsonPlayerDetail</servlet-name>
 		<servlet-class>cz.krajcovic.playersengine.server.JsonPlayerDetail</servlet-class>
 	</servlet>
 
+
+	<!-- Servlets mappin -->
 	<servlet-mapping>
 		<servlet-name>greetServlet</servlet-name>
 		<url-pattern>/starterapplication/greet</url-pattern>
@@ -38,6 +45,11 @@
 	<servlet-mapping>
 		<servlet-name>playersServlet</servlet-name>
 		<url-pattern>/playersengine/players</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>jsonPlayer</servlet-name>
+		<url-pattern>/playersengine/player</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
