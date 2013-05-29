@@ -1,4 +1,6 @@
-/test-classes
+/test-classes/
+/www-test/
+
 
 ###Java###
 
@@ -46,6 +48,9 @@ local.properties
 *.jar
 *.war
 
+# .gwt logs #
+.gwt/
+
 # gwt caches and compiled units #
 war/gwt_bree/
 gwt-unitCache/
@@ -56,6 +61,7 @@ gwt-unitCache/
 # more caches and things from deploy #
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
+war/playersengine/
 
 
 
