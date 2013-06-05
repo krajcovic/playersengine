@@ -7,7 +7,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import cz.krajcovic.playersengine.base.Player;
 import cz.krajcovic.playersengine.client.DelistedException;
-import cz.krajcovic.playersengine.client.PlayersService;
+import cz.krajcovic.playersengine.client.service.PlayersService;
 
 public class PlayersServiceImpl extends RemoteServiceServlet implements
 		PlayersService {

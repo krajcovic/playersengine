@@ -28,6 +28,8 @@ import cz.krajcovic.playersengine.base.Player;
 import cz.krajcovic.playersengine.base.PlayerDetail;
 import cz.krajcovic.playersengine.client.langs.PlayersEngineConstants;
 import cz.krajcovic.playersengine.client.langs.PlayersEngineMessages;
+import cz.krajcovic.playersengine.client.service.PlayersService;
+import cz.krajcovic.playersengine.client.service.PlayersServiceAsync;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.

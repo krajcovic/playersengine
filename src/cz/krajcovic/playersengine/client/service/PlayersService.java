@@ -1,4 +1,4 @@
-package cz.krajcovic.playersengine.client;
+package cz.krajcovic.playersengine.client.service;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import cz.krajcovic.playersengine.base.Player;
+import cz.krajcovic.playersengine.client.DelistedException;
 
 @RemoteServiceRelativePath("players")
 public interface PlayersService extends RemoteService {

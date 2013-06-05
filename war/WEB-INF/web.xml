@@ -6,7 +6,8 @@
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
-		<welcome-file>playersengine/PlayersEngine.html</welcome-file>
+		<!-- <welcome-file>playersengine/PlayersEngine.html</welcome-file> -->
+		<welcome-file>TodoApplication.jsp</welcome-file>
 	</welcome-file-list>
 	<!-- <welcome-file-list> <welcome-file>questbook.jsp</welcome-file> </welcome-file-list> -->
 
@@ -15,16 +16,29 @@
 	</session-config>
 
 	<!-- Servlets -->
+	<!-- Greeting -->
 	<servlet>
 		<servlet-name>greetServlet</servlet-name>
 		<servlet-class>cz.krajcovic.playersengine.server.GreetingServiceImpl</servlet-class>
 	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>greetServlet</servlet-name>
+		<url-pattern>/starterapplication/greet</url-pattern>
+	</servlet-mapping>
+
+	<!-- PlayersServlet -->
 	<servlet>
 		<servlet-name>playersServlet</servlet-name>
 		<servlet-class>cz.krajcovic.playersengine.server.PlayersServiceImpl</servlet-class>
 	</servlet>
+	
+		<servlet-mapping>
+		<servlet-name>playersServlet</servlet-name>
+		<url-pattern>/playersengine/players</url-pattern>
+	</servlet-mapping>
 
+	<!-- Player JSON -->
 	<servlet>
 		<servlet-name>jsonPlayer</servlet-name>
 		<servlet-class>cz.krajcovic.playersengine.server.JsonPlayer</servlet-class>
@@ -36,17 +50,6 @@
 	</servlet>
 
 
-	<!-- Servlets mappin -->
-	<servlet-mapping>
-		<servlet-name>greetServlet</servlet-name>
-		<url-pattern>/starterapplication/greet</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>playersServlet</servlet-name>
-		<url-pattern>/playersengine/players</url-pattern>
-	</servlet-mapping>
-
 	<servlet-mapping>
 		<servlet-name>jsonPlayer</servlet-name>
 		<url-pattern>/playersengine/player</url-pattern>
@@ -55,6 +58,24 @@
 	<servlet-mapping>
 		<servlet-name>jsonPlayerDetail</servlet-name>
 		<url-pattern>/playersengine/playerdetail</url-pattern>
+	</servlet-mapping>
+
+	<!-- Test TODO -->
+	<servlet>
+		<servlet-name>CreateNewTodo</servlet-name>
+		<servlet-class>cz.krajcovic.playersengine.server.ServletCreateTodo</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>RemoveTodo</servlet-name>
+		<servlet-class>cz.krajcovic.playersengine.server.ServletRemoveTodo</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RemoveTodo</servlet-name>
+		<url-pattern>/done</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CreateNewTodo</servlet-name>
+		<url-pattern>/new</url-pattern>
 	</servlet-mapping>
 
 </web-app>

@@ -1,5 +1,7 @@
 package cz.krajcovic.playersengine.client;
 
+import cz.krajcovic.playersengine.client.service.GreetingService;
+import cz.krajcovic.playersengine.client.service.GreetingServiceAsync;
 import cz.krajcovic.playersengine.shared.FieldVerifier;
 
 import com.google.gwt.core.client.EntryPoint;

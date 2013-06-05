@@ -5,7 +5,7 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import cz.krajcovic.playersengine.client.GreetingService;
+import cz.krajcovic.playersengine.client.service.GreetingService;
 import cz.krajcovic.playersengine.shared.FieldVerifier;
 
 /**

@@ -1,4 +1,4 @@
-package cz.krajcovic.playersengine.client;
+package cz.krajcovic.playersengine.client.service;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
