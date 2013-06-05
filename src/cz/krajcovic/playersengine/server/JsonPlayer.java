@@ -14,6 +14,10 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
 
+/**
+ * @author krajcovic
+ *
+ */
 public class JsonPlayer extends HttpServlet {
 
 	/**
