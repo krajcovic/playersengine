@@ -115,7 +115,7 @@ public class PlayersEngineDB implements EntryPoint {
 		mainPanel.add(lastUpdatedLabel);
 
 		// Associate the Main panel with the HTML host page.
-		RootPanel.get("playersList").add(mainPanel);
+		//RootPanel.get("playersList").add(mainPanel);
 
 		// Move cursor focus to the input box.
 		newSecondName.setFocus(true);

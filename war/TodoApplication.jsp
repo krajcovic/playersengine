@@ -14,6 +14,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Todos</title>
+<link type="text/css" rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="css/main.css" />
 <meta charset="utf-8">
 </head>
@@ -38,7 +39,7 @@
 		<div class="line"></div>
 		<div class="topLine">
 			<div style="float: left;">
-				<img src="images/todo.png" />
+				<img src="img/todo.png" />
 			</div>
 			<div style="float: left;" class="headline">Todos</div>
 			<div style="float: right;">
@@ -67,8 +68,7 @@
 			<td><%=todo.getSummary()%></td>
 			<td><%=todo.getDescription()%></td>
 			<td><%=todo.getUrl()%></td>
-			<td><a class="done" href="/done?id=<%=todo.getId()%>">Done</a>
-			</td>
+			<td><a class="done" href="/done?id=<%=todo.getId()%>">Done</a></td>
 		</tr>
 		<%
 			}

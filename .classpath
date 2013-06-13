@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="lib" path="/home/krajcovic/software/springsource/sts-3.2.0.RELEASE/plugins/com.google.gwt.eclipse.sdkbundle_2.5.1/gwt-2.5.1/gwt-user.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/krajcovic/software/springsource/sts-3.2.0.RELEASE/plugins/com.google.gwt.eclipse.sdkbundle_2.5.1/gwt-2.5.1/doc/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/krajcovic/software/springsource/sts-3.2.0.RELEASE/plugins/com.google.gwt.eclipse.sdkbundle_2.5.1/gwt-2.5.1/gwt-dev.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/krajcovic/software/springsource/sts-3.2.0.RELEASE/plugins/com.google.gwt.eclipse.sdkbundle_2.5.1/gwt-2.5.1/doc/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/krajcovic/software/springsource/sts-3.2.0.RELEASE/plugins/com.google.gwt.eclipse.sdkbundle_2.5.1/gwt-2.5.1/validation-api-1.0.0.GA-sources.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/software/springsource/sts-3.2.0.RELEASE/plugins/com.google.gwt.eclipse.sdkbundle_2.5.1/gwt-2.5.1/validation-api-1.0.0.GA.jar" sourcepath="/home/krajcovic/software/springsource/sts-3.2.0.RELEASE/plugins/com.google.gwt.eclipse.sdkbundle_2.5.1/gwt-2.5.1/validation-api-1.0.0.GA-sources.jar"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/joda-time-2.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-api-client-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-api-client-android-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-api-client-appengine-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-api-client-java6-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-api-client-servlet-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-api-services-drive-v2-rev76-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-http-client-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-http-client-android-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-http-client-appengine-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-http-client-gson-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-http-client-jackson2-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-http-client-jackson-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-oauth-client-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-oauth-client-appengine-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-oauth-client-java6-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-oauth-client-java7-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-oauth-client-jetty-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/google-oauth-client-servlet-1.15.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/gson-2.1.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/httpclient-4.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/httpcore-4.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/jackson-core-2.1.3.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/jackson-core-asl-1.9.11.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/jdo2-api-2.3-eb.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/jetty-6.1.26.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/jetty-util-6.1.26.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/jsr305-1.3.9.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/protobuf-java-2.4.1.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/transaction-api-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/krajcovic/workspace/sources/gwt/playersengine/war/WEB-INF/lib/drive/xpp3-1.1.4c.jar"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>

@@ -11,10 +11,10 @@
 <!-- Setting the locale -->
 <meta name="gwt:property" content="locale=cz">
 
-<link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+<!--                                                               -->
 <!-- Consider inlining CSS to reduce the number of requested files -->
+<!--                                                               -->
 <link type="text/css" rel="stylesheet" href="css/PlayersEngine.css">
-
 
 <!--                                           -->
 <!-- Any title is fine                         -->
@@ -49,31 +49,18 @@
 			application to display correctly.</div>
 	</noscript>
 
-	<div class="container">
-		<div class="row">
-			<div class="span5">
-				<img src="img/zlin_rugby_logo.jpg" />
-			</div>
-			<div class="span5">
+	<table align="center" border="1">
+		<tr>
+			<td><img src="images/zlin_rugby_logo.jpg" /></td>
+			<td>
 				<h1 id="appTitle">PlayersEngine</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="table" id="playerList"></div>
-		</div>
-		<!-- 		<table class="table" align="center" border="1">
-			<tr>
-				<td><img src="img/zlin_rugby_logo.jpg" /></td>
-				<td>
-					<h1 id="appTitle">PlayersEngine</h1>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<div id="playersList" align="center"></div>
-				<td>
-			</tr>
-		</table> -->
-	</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<div id="playersList" align="center"></div>
+			<td>
+		</tr>
+	</table>
 </body>
 </html>
